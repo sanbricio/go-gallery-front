@@ -1,0 +1,15 @@
+<p>body works!</p>
+
+<input type="text" [(ngModel)]="idImage">
+<button  (click)="findImage()">Buscar imagen</button>
+
+
+@if (image | async; as image) {
+    {{image.id_image}}
+    {{image.name}}
+    {{image.owner}}
+    {{image.extension}}
+    {{image.content_file}}
+}
+
+

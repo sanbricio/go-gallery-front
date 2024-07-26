@@ -4,11 +4,12 @@ import { Image } from '../../interfaces/Image';
 import { ApiService } from '../../core/services/api.service';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FormUploadImageComponent } from "./components/forms/form-upload-image/form-upload-image.component";
 
 @Component({
   selector: 'app-body',
   standalone: true,
-  imports: [AsyncPipe,FormsModule],
+  imports: [AsyncPipe, FormsModule, FormUploadImageComponent],
   templateUrl: './body.component.html',
   styleUrl: './body.component.css'
 })

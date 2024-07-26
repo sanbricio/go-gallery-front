@@ -2,7 +2,7 @@
 
 <input type="text" [(ngModel)]="idImage">
 <button  (click)="findImage()">Buscar imagen</button>
-
+<app-form-upload-image></app-form-upload-image>
 
 @if (image | async; as image) {
     {{image.id_image}}

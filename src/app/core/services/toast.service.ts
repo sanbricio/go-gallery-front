@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 export interface Toast {
   id: number;
@@ -12,7 +12,7 @@ export interface Toast {
   providedIn: 'root'
 })
 export class ToastService {
-  private toastSubject = new BehaviorSubject<Toast[]>([]);
+  private readonly toastSubject = new BehaviorSubject<Toast[]>([]);
   public toasts$ = this.toastSubject.asObservable();
   private counter = 0;
 

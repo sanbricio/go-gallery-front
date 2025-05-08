@@ -61,7 +61,7 @@ export class AuthService {
           const user: User = {
             username: response.username,
             email: response.email,
-            firstname: response.name.split(' ')[0] || '',
+            firstname: response.name.split(' ')[0] || '', //TODO Mirar lo que devuelve el login por que nos interesa???
             lastname: response.name.split(' ')[1] || ''
           };
           sessionStorage.setItem('user', JSON.stringify(user));
@@ -109,9 +109,9 @@ export class AuthService {
           if (currentUser) {
             const updatedUser: User = {
               ...currentUser,
-              firstname: userData.firstname || currentUser.firstname,
-              lastname: userData.lastname || currentUser.lastname,
-              email: userData.email || currentUser.email
+              firstname: userData.firstname ?? currentUser.firstname,
+              lastname: userData.lastname ?? currentUser.lastname,
+              email: userData.email ?? currentUser.email
             };
             sessionStorage.setItem('user', JSON.stringify(updatedUser));
             this.currentUserSubject.next(updatedUser);

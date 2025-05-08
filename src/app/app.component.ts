@@ -12,7 +12,9 @@ import { ToastComponent } from './shared/components/toast/toast.component';
     <div class="app-container">
       <app-header></app-header>
       <main>
-        <router-outlet></router-outlet>
+        <div class="main-content">
+          <router-outlet></router-outlet>
+        </div>
       </main>
       <app-footer></app-footer>
       <app-toast></app-toast>
@@ -23,12 +25,32 @@ import { ToastComponent } from './shared/components/toast/toast.component';
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden;
     }
     
     main {
       flex: 1;
-      padding: 24px;
       background-color: var(--background);
+    }
+    
+    .main-content {
+      padding: var(--container-padding);
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    @media (max-width: 768px) {
+      .main-content {
+        padding: var(--container-padding-mobile);
+      }
+    }
+    
+    @supports(padding: max(0px)) {
+      .main-content {
+        padding-left: max(var(--container-padding-mobile), env(safe-area-inset-left));
+        padding-right: max(var(--container-padding-mobile), env(safe-area-inset-right));
+      }
     }
   `]
 })

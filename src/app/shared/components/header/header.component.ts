@@ -18,36 +18,41 @@ import { AuthService } from '../../../core/services/auth.service';
         <nav class="nav-menu" [class.active]="menuOpen">
           <ul class="nav-list">
             <li class="nav-item">
-              <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">Home</a>
+              <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMenu()">Home</a>
             </li>
             
             <ng-container *ngIf="isLoggedIn">
               <li class="nav-item">
-                <a routerLink="/gallery" routerLinkActive="active" class="nav-link">Gallery</a>
+                <a routerLink="/gallery" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Gallery</a>
               </li>
               <li class="nav-item">
-                <a routerLink="/upload" routerLinkActive="active" class="nav-link">Upload</a>
+                <a routerLink="/upload" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Upload</a>
               </li>
               <li class="nav-item">
-                <a routerLink="/profile" routerLinkActive="active" class="nav-link">Profile</a>
+                <a routerLink="/profile" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Profile</a>
               </li>
               <li class="nav-item">
-                <button (click)="logout()" class="nav-link logout-btn">Logout</button>
+                <button (click)="logout(); closeMenu()" class="nav-link logout-btn">Logout</button>
               </li>
             </ng-container>
             
             <ng-container *ngIf="!isLoggedIn">
               <li class="nav-item">
-                <a routerLink="/login" routerLinkActive="active" class="nav-link">Login</a>
+                <a routerLink="/login" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Login</a>
               </li>
               <li class="nav-item">
-                <a routerLink="/register" routerLinkActive="active" class="nav-link register-link">Register</a>
+                <a routerLink="/register" routerLinkActive="active" class="nav-link register-link" (click)="closeMenu()">Register</a>
               </li>
             </ng-container>
           </ul>
         </nav>
         
-        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle menu">
+        <button 
+          class="menu-toggle" 
+          (click)="toggleMenu()" 
+          aria-label="Toggle menu"
+          [attr.aria-expanded]="menuOpen"
+        >
           <div class="hamburger" [class.active]="menuOpen">
             <span></span>
             <span></span>
@@ -60,11 +65,17 @@ import { AuthService } from '../../../core/services/auth.service';
   styles: [`
     .header {
       background-color: var(--primary);
-      padding: 16px 24px;
+      padding: 16px var(--container-padding);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       position: sticky;
       top: 0;
       z-index: 100;
+    }
+    
+    @media (max-width: 768px) {
+      .header {
+        padding: 12px var(--container-padding-mobile);
+      }
     }
     
     .header-container {
@@ -73,6 +84,7 @@ import { AuthService } from '../../../core/services/auth.service';
       align-items: center;
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
     }
     
     .logo {
@@ -81,6 +93,7 @@ import { AuthService } from '../../../core/services/auth.service';
       font-weight: 700;
       text-decoration: none;
       transition: opacity 0.3s;
+      z-index: 102;
     }
     
     .logo:hover {
@@ -106,6 +119,7 @@ import { AuthService } from '../../../core/services/auth.service';
       padding: 8px 12px;
       border-radius: 4px;
       transition: background-color 0.3s;
+      white-space: nowrap;
     }
     
     .nav-link:hover, .nav-link.active {
@@ -126,6 +140,8 @@ import { AuthService } from '../../../core/services/auth.service';
       border: none;
       cursor: pointer;
       font-size: 16px;
+      width: 100%;
+      text-align: left;
     }
     
     .menu-toggle {
@@ -134,6 +150,7 @@ import { AuthService } from '../../../core/services/auth.service';
       border: none;
       cursor: pointer;
       padding: 8px;
+      z-index: 102;
     }
     
     .hamburger {
@@ -171,13 +188,15 @@ import { AuthService } from '../../../core/services/auth.service';
       
       .nav-menu {
         position: fixed;
-        top: 64px;
+        top: 0;
         left: 0;
         right: 0;
+        bottom: 0;
         background-color: var(--primary);
-        padding: 16px;
+        padding: 80px var(--container-padding-mobile) var(--container-padding-mobile);
         display: none;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 101;
+        overflow-y: auto;
       }
       
       .nav-menu.active {
@@ -186,11 +205,38 @@ import { AuthService } from '../../../core/services/auth.service';
       
       .nav-list {
         flex-direction: column;
+        gap: 8px;
+      }
+      
+      .nav-item {
+        width: 100%;
       }
       
       .nav-link {
         display: block;
-        padding: 12px;
+        padding: 16px;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+      }
+      
+      .register-link {
+        margin-top: 8px;
+      }
+    }
+    
+    @supports(padding: max(0px)) {
+      .header {
+        padding-left: max(var(--container-padding-mobile), env(safe-area-inset-left));
+        padding-right: max(var(--container-padding-mobile), env(safe-area-inset-right));
+      }
+      
+      @media (max-width: 768px) {
+        .nav-menu {
+          padding-left: max(var(--container-padding-mobile), env(safe-area-inset-left));
+          padding-right: max(var(--container-padding-mobile), env(safe-area-inset-right));
+          padding-bottom: max(var(--container-padding-mobile), env(safe-area-inset-bottom));
+        }
       }
     }
   `]
@@ -214,6 +260,20 @@ export class HeaderComponent implements OnInit {
   
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
+    
+    // Prevent body scroll when menu is open
+    if (this.menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+  
+  closeMenu(): void {
+    if (this.menuOpen) {
+      this.menuOpen = false;
+      document.body.style.overflow = '';
+    }
   }
   
   logout(): void {

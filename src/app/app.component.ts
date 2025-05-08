@@ -26,23 +26,32 @@ import { ToastComponent } from './shared/components/toast/toast.component';
       flex-direction: column;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
     
     main {
       flex: 1;
       background-color: var(--background);
+      width: 100%;
+      padding-top: 16px;
+      padding-bottom: 32px;
     }
     
     .main-content {
-      padding: var(--container-padding);
+      padding: 0 var(--container-padding);
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
     }
     
     @media (max-width: 768px) {
+      main {
+        padding-top: 8px;
+        padding-bottom: 24px;
+      }
+      
       .main-content {
-        padding: var(--container-padding-mobile);
+        padding: 0 var(--container-padding-mobile);
       }
     }
     
@@ -50,6 +59,7 @@ import { ToastComponent } from './shared/components/toast/toast.component';
       .main-content {
         padding-left: max(var(--container-padding-mobile), env(safe-area-inset-left));
         padding-right: max(var(--container-padding-mobile), env(safe-area-inset-right));
+        padding-bottom: max(var(--container-padding-mobile), env(safe-area-inset-bottom));
       }
     }
   `]

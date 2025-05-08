@@ -12,36 +12,50 @@ import { AuthService } from '../../../core/services/auth.service';
     <header class="header">
       <div class="header-container">
         <a routerLink="/" class="logo">
-          GoGallery
+          📸 GoGallery
         </a>
         
         <nav class="nav-menu" [class.active]="menuOpen">
           <ul class="nav-list">
             <li class="nav-item">
-              <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMenu()">Home</a>
+              <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMenu()">
+                🏠 Home
+              </a>
             </li>
             
             <ng-container *ngIf="isLoggedIn">
               <li class="nav-item">
-                <a routerLink="/gallery" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Gallery</a>
+                <a routerLink="/gallery" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
+                  🖼️ Gallery
+                </a>
               </li>
               <li class="nav-item">
-                <a routerLink="/upload" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Upload</a>
+                <a routerLink="/upload" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
+                  ⬆️ Upload
+                </a>
               </li>
               <li class="nav-item">
-                <a routerLink="/profile" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Profile</a>
+                <a routerLink="/profile" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
+                  👤 Profile
+                </a>
               </li>
               <li class="nav-item">
-                <button (click)="logout(); closeMenu()" class="nav-link logout-btn">Logout</button>
+                <button (click)="logout(); closeMenu()" class="nav-link logout-btn">
+                  🚪 Logout
+                </button>
               </li>
             </ng-container>
             
             <ng-container *ngIf="!isLoggedIn">
               <li class="nav-item">
-                <a routerLink="/login" routerLinkActive="active" class="nav-link" (click)="closeMenu()">Login</a>
+                <a routerLink="/login" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
+                  🔑 Login
+                </a>
               </li>
               <li class="nav-item">
-                <a routerLink="/register" routerLinkActive="active" class="nav-link register-link" (click)="closeMenu()">Register</a>
+                <a routerLink="/register" routerLinkActive="active" class="nav-link register-link" (click)="closeMenu()">
+                  ✨ Register
+                </a>
               </li>
             </ng-container>
           </ul>
@@ -70,12 +84,7 @@ import { AuthService } from '../../../core/services/auth.service';
       position: sticky;
       top: 0;
       z-index: 100;
-    }
-    
-    @media (max-width: 768px) {
-      .header {
-        padding: 12px var(--container-padding-mobile);
-      }
+      width: 100%;
     }
     
     .header-container {
@@ -94,6 +103,9 @@ import { AuthService } from '../../../core/services/auth.service';
       text-decoration: none;
       transition: opacity 0.3s;
       z-index: 102;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
     .logo:hover {
@@ -120,6 +132,9 @@ import { AuthService } from '../../../core/services/auth.service';
       border-radius: 4px;
       transition: background-color 0.3s;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
     .nav-link:hover, .nav-link.active {
@@ -142,6 +157,8 @@ import { AuthService } from '../../../core/services/auth.service';
       font-size: 16px;
       width: 100%;
       text-align: left;
+      display: flex;
+      align-items: center;
     }
     
     .menu-toggle {
@@ -182,6 +199,11 @@ import { AuthService } from '../../../core/services/auth.service';
     }
     
     @media (max-width: 768px) {
+      .header {
+        padding: 12px var(--container-padding-mobile);
+        position: fixed;
+      }
+      
       .menu-toggle {
         display: block;
       }
@@ -213,11 +235,11 @@ import { AuthService } from '../../../core/services/auth.service';
       }
       
       .nav-link {
-        display: block;
+        display: flex;
         padding: 16px;
         width: 100%;
-        text-align: center;
         font-size: 18px;
+        justify-content: flex-start;
       }
       
       .register-link {
@@ -236,6 +258,7 @@ import { AuthService } from '../../../core/services/auth.service';
           padding-left: max(var(--container-padding-mobile), env(safe-area-inset-left));
           padding-right: max(var(--container-padding-mobile), env(safe-area-inset-right));
           padding-bottom: max(var(--container-padding-mobile), env(safe-area-inset-bottom));
+          padding-top: max(80px, env(safe-area-inset-top));
         }
       }
     }

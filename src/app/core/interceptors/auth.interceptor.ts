@@ -3,26 +3,33 @@ import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
+import { environment } from '../../../environments/environment';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const toastService = inject(ToastService);
   
-  // No need to add Authorization header since we're using HttpOnly cookies
-  // The browser will automatically include cookies in the request
+  // Clone the request and add withCredentials option
+  const authReq = req.clone({
+    withCredentials: environment.withCredentials
+  });
   
-  return next(req).pipe(
+  return next(authReq).pipe(
     catchError(error => {
       if (error.status === 401) {
         // If unauthorized, clear local storage and redirect to login
         sessionStorage.removeItem('user');
-        toastService.show('Your session has expired. Please login again.', 'error');
-        router.navigate(['/login']);
+        
+        // Only show toast and redirect if not already on login page
+        if (!router.url.includes('/login')) {
+          toastService.show('Your session has expired. Please login again.', 'error');
+          router.navigate(['/login']);
+        }
+      } else {
+        // Show error message for other errors
+        const errorMessage = error.error?.message ?? 'An unexpected error occurred';
+        toastService.show(errorMessage, 'error');
       }
-      
-      // Show error message
-      const errorMessage = error.error?.message ?? 'An unexpected error occurred';
-      toastService.show(errorMessage, 'error');
       
       return throwError(() => error);
     })

@@ -5,8 +5,7 @@ import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { 
-  Image, 
-  Thumbnail, 
+  Image,  
   ThumbnailCursor, 
   ImageUpdateRequest, 
   ImageUpdateResponse,
@@ -18,9 +17,9 @@ import { MessageResponse } from '../models/user.model';
   providedIn: 'root'
 })
 export class ImageService {
-  private apiUrl = `${environment.apiUrl}/image`;
+  private readonly apiUrl = `${environment.apiUrl}/image`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   uploadImage(file: File): Observable<Image> {
     const formData = new FormData();

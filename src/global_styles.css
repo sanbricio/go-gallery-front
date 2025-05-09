@@ -53,15 +53,21 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 body {
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   color: var(--text-primary);
@@ -77,20 +83,24 @@ body {
   position: relative;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   body {
     font-size: 14px;
     padding-top: var(--header-height-mobile);
   }
 }
 
-img, picture {
-  max-width: 100%;
+img, picture, video, canvas, svg {
   display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 input, button, textarea, select {
   font: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 /* Container */
@@ -102,7 +112,7 @@ input, button, textarea, select {
   flex: 1;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .container {
     padding: 0 var(--container-padding-mobile);
   }
@@ -124,7 +134,7 @@ h3 {
   line-height: 1.4;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   h1 {
     font-size: 2rem;
   }
@@ -148,9 +158,10 @@ input, textarea, select {
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   input, textarea, select {
     padding: 10px;
+    font-size: 16px; /* Prevent zoom on iOS */
   }
 }
 
@@ -173,9 +184,10 @@ input:focus, textarea:focus, select:focus {
   border: none;
   text-decoration: none;
   min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .btn {
     padding: 10px 20px;
     min-height: 44px;
@@ -209,7 +221,7 @@ input:focus, textarea:focus, select:focus {
   grid-template-columns: repeat(12, 1fr);
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .grid {
     gap: 16px;
     grid-template-columns: repeat(4, 1fr);
@@ -224,7 +236,7 @@ input:focus, textarea:focus, select:focus {
   padding: 24px;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .card {
     padding: 16px;
   }
@@ -247,20 +259,20 @@ input:focus, textarea:focus, select:focus {
 .mb-4 { margin-bottom: 1.5rem; }
 .mb-5 { margin-bottom: 2rem; }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .hidden-mobile {
-    display: none;
+    display: none !important;
   }
 }
 
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
   .hidden-desktop {
-    display: none;
+    display: none !important;
   }
 }
 
 /* Touch Target Sizes */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   button,
   [role="button"],
   input[type="submit"],
@@ -307,20 +319,19 @@ input:focus, textarea:focus, select:focus {
 /* Safe Area Insets for Modern Mobile Browsers */
 @supports(padding: max(0px)) {
   body {
-    padding-left: max(0px, env(safe-area-inset-left));
-    padding-right: max(0px, env(safe-area-inset-right));
+    padding-left: max(var(--container-padding-mobile), env(safe-area-inset-left));
+    padding-right: max(var(--container-padding-mobile), env(safe-area-inset-right));
     padding-bottom: max(0px, env(safe-area-inset-bottom));
     padding-top: max(var(--header-height-mobile), env(safe-area-inset-top));
   }
 }
 
 /* Improved Scrolling */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   * {
     -webkit-overflow-scrolling: touch;
   }
   
-  /* Hide scrollbars on mobile while preserving functionality */
   ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
@@ -347,5 +358,39 @@ input:focus, textarea:focus, select:focus {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Fix for iOS input zoom */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Fix for sticky hover on mobile */
+@media (hover: hover) {
+  .btn:hover {
+    opacity: 0.9;
+  }
+}
+
+/* Fix for Firefox specific issues */
+@-moz-document url-prefix() {
+  body {
+    height: 100%;
+    min-height: 100vh;
+  }
+  
+  .nav-menu {
+    scrollbar-width: none;
   }
 }

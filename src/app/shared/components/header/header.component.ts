@@ -116,29 +116,28 @@ import { AuthService } from "../../../core/services/auth.service";
   `,
   styles: [`
     :host {
-      display: block;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
+      display: block;
     }
 
     .header {
       background-color: var(--primary);
-      padding: 0 var(--container-padding);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       height: var(--header-height);
+      width: 100%;
     }
 
     .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       max-width: 1200px;
       margin: 0 auto;
       height: 100%;
-      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--container-padding);
     }
 
     .logo {
@@ -147,7 +146,6 @@ import { AuthService } from "../../../core/services/auth.service";
       font-weight: 700;
       text-decoration: none;
       transition: opacity 0.3s;
-      z-index: 102;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -160,23 +158,20 @@ import { AuthService } from "../../../core/services/auth.service";
     .logo-image {
       height: 32px;
       width: auto;
-      display: block;
     }
 
     .nav-menu {
       height: 100%;
-      display: flex;
-      align-items: center;
     }
 
     .nav-list {
+      height: 100%;
       display: flex;
+      align-items: center;
       list-style: none;
       margin: 0;
       padding: 0;
       gap: 16px;
-      height: 100%;
-      align-items: center;
     }
 
     .nav-link {
@@ -186,7 +181,6 @@ import { AuthService } from "../../../core/services/auth.service";
       padding: 8px 12px;
       border-radius: 4px;
       transition: background-color 0.3s;
-      white-space: nowrap;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -211,58 +205,71 @@ import { AuthService } from "../../../core/services/auth.service";
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 16px;
-      width: 100%;
-      text-align: left;
+      font-size: inherit;
+      font-family: inherit;
+      padding: 8px 12px;
+      color: white;
       display: flex;
       align-items: center;
+      gap: 8px;
     }
 
     .menu-toggle {
       display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      z-index: 102;
-    }
-
-    .hamburger {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 24px;
-      height: 18px;
-    }
-
-    .hamburger span {
-      display: block;
-      height: 2px;
-      width: 100%;
-      background-color: white;
-      transition: all 0.3s;
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: translateY(8px) rotate(45deg);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: translateY(-8px) rotate(-45deg);
     }
 
     @media (max-width: 768px) {
       .header {
-        padding: 0 var(--container-padding-mobile);
         height: var(--header-height-mobile);
+      }
+
+      .header-container {
+        padding: 0 var(--container-padding-mobile);
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .logo-image {
+        height: 28px;
       }
 
       .menu-toggle {
         display: block;
+        background: none;
+        border: none;
+        padding: 8px;
+        cursor: pointer;
+        z-index: 102;
+      }
+
+      .hamburger {
+        width: 24px;
+        height: 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .hamburger span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background-color: white;
+        transition: all 0.3s;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
       }
 
       .nav-menu {
@@ -272,11 +279,10 @@ import { AuthService } from "../../../core/services/auth.service";
         right: 0;
         bottom: 0;
         background-color: var(--primary);
-        padding: 16px var(--container-padding-mobile);
         display: none;
-        z-index: 101;
-        overflow-y: auto;
+        padding: 16px var(--container-padding-mobile);
         height: calc(100vh - var(--header-height-mobile));
+        overflow-y: auto;
       }
 
       .nav-menu.active {
@@ -285,9 +291,9 @@ import { AuthService } from "../../../core/services/auth.service";
 
       .nav-list {
         flex-direction: column;
-        gap: 8px;
         height: auto;
         align-items: stretch;
+        gap: 8px;
       }
 
       .nav-item {
@@ -298,24 +304,15 @@ import { AuthService } from "../../../core/services/auth.service";
         padding: 16px;
         width: 100%;
         font-size: 18px;
-        justify-content: flex-start;
       }
 
       .register-link {
         margin-top: 8px;
       }
-
-      .logo {
-        font-size: 20px;
-      }
-
-      .logo-image {
-        height: 28px;
-      }
     }
 
-    @supports (padding: max(0px)) {
-      .header {
+    @supports(padding: max(0px)) {
+      .header-container {
         padding-left: max(var(--container-padding-mobile), env(safe-area-inset-left));
         padding-right: max(var(--container-padding-mobile), env(safe-area-inset-right));
       }
@@ -335,7 +332,6 @@ export class HeaderComponent implements OnInit {
   menuOpen = false;
 
   constructor(private readonly authService: AuthService) {
-    // Track auth state changes
     effect(() => {
       this.authService.currentUser$.subscribe((user) => {
         this.isLoggedIn = !!user;
@@ -349,13 +345,7 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
-
-    // Prevent body scroll when menu is open
-    if (this.menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = this.menuOpen ? "hidden" : "";
   }
 
   closeMenu(): void {

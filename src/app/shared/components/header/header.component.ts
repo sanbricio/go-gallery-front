@@ -115,19 +115,15 @@ import { AuthService } from "../../../core/services/auth.service";
     </header>
   `,
   styles: [`
-    :host {
+    .header {
+      background-color: var(--primary);
+      height: var(--header-height);
+      width: 100%;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      display: block;
-    }
-
-    .header {
-      background-color: var(--primary);
-      height: var(--header-height);
-      width: 100%;
     }
 
     .header-container {

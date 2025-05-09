@@ -7,14 +7,12 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-content">
-          <p class="copyright">© {{ currentYear }} GoGallery. All rights reserved.</p>
-          <div class="footer-links">
-            <a href="#" class="footer-link">Privacy Policy</a>
-            <a href="#" class="footer-link">Terms of Service</a>
-            <a href="#" class="footer-link">Contact</a>
-          </div>
+      <div class="footer-content">
+        <p class="copyright">© {{ currentYear }} GoGallery. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Contact</a>
         </div>
       </div>
     </footer>
@@ -23,19 +21,17 @@ import { CommonModule } from '@angular/common';
     .footer {
       background-color: var(--primary);
       color: white;
-      padding: 24px;
+      padding: 24px var(--container-padding);
       margin-top: auto;
-    }
-    
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
+      width: 100%;
     }
     
     .footer-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     
     .copyright {
@@ -61,6 +57,10 @@ import { CommonModule } from '@angular/common';
     }
     
     @media (max-width: 768px) {
+      .footer {
+        padding: 24px var(--container-padding-mobile);
+      }
+      
       .footer-content {
         flex-direction: column;
         gap: 16px;
@@ -70,6 +70,21 @@ import { CommonModule } from '@angular/common';
       .footer-links {
         flex-direction: column;
         gap: 12px;
+      }
+    }
+    
+    @supports(padding: max(0px)) {
+      .footer {
+        padding-left: max(var(--container-padding), env(safe-area-inset-left));
+        padding-right: max(var(--container-padding), env(safe-area-inset-right));
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
+      }
+      
+      @media (max-width: 768px) {
+        .footer {
+          padding-left: max(var(--container-padding-mobile), env(safe-area-inset-left));
+          padding-right: max(var(--container-padding-mobile), env(safe-area-inset-right));
+        }
       }
     }
   `]

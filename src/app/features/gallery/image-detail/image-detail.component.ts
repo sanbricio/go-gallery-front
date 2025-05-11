@@ -8,6 +8,7 @@ import { ToastService } from '../../../core/services/toast.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Image } from '../../../core/models/image.model';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { ImageContextService } from '../../../core/services/image-context.service';
 
 @Component({
   selector: 'app-image-detail',
@@ -358,6 +359,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 })
 export class ImageDetailComponent implements OnInit {
   imageId: string | null = null;
+  thumbnailID : string | null = null;
   image: Image | null = null;
   loading = true;
   downloadLoading = false;
@@ -373,7 +375,8 @@ export class ImageDetailComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly imageService: ImageService,
     private readonly authService: AuthService,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly imageContext : ImageContextService
   ) {
     this.renameForm = this.formBuilder.group({
       name: ['', Validators.required]
@@ -385,8 +388,9 @@ export class ImageDetailComponent implements OnInit {
   
   ngOnInit(): void {
     this.imageId = this.route.snapshot.paramMap.get('id');
-    
-    if (this.imageId) {
+    this.thumbnailID = this.imageContext.getThumbnailId();
+
+    if (this.imageId && this.thumbnailID) {
       this.loadImage();
     } else {
       this.loading = false;
@@ -447,6 +451,7 @@ export class ImageDetailComponent implements OnInit {
     
     this.imageService.deleteImage({
       id: this.image.id,
+      thumbnail_id: this.thumbnailID ?? '',
       owner: this.image.owner
     }).subscribe({
       next: (response) => {
@@ -495,6 +500,7 @@ export class ImageDetailComponent implements OnInit {
     this.imageService.updateImage({
       id: this.image.id,
       name: this.renameForm.value.name,
+      thumbnail_id:  this.thumbnailID ?? '',
       owner: this.image.owner
     }).subscribe({
       next: (response) => {

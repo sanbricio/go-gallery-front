@@ -1,16 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Thumbnail } from '../../../core/models/image.model';
+import { ImageContextService } from '../../../core/services/image-context.service';
 
 @Component({
   selector: 'app-image-card',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   template: `
     <div class="image-card">
-      <a [routerLink]="['/image', thumbnail.imageID]" class="image-link">
+      <a (click)="goToDetail()" class="image-link">
         <div class="image-container">
           <img
             [src]="'data:image/' + getImageType(thumbnail.extension) + ';base64,' + thumbnail.content_file"
@@ -19,15 +20,15 @@ import { Thumbnail } from '../../../core/models/image.model';
           >
         </div>
       </a>
-      
+
       <div class="image-info">
-        <a [routerLink]="['/image', thumbnail.imageID]" class="image-name">
+        <a (click)="goToDetail()" class="image-name">
           {{ thumbnail.name }}
         </a>
         <div class="image-meta">
           <span class="image-size">{{ thumbnail.size }}</span>
           <button class="delete-btn" (click)="onDelete()" title="Delete image">
-            <span class="delete-icon">×</span>
+              <img src="assets/images/icons/x.svg" alt="Delete" class="delete-icon" />
           </button>
         </div>
       </div>
@@ -60,7 +61,7 @@ import { Thumbnail } from '../../../core/models/image.model';
     .image-container {
       position: relative;
       width: 100%;
-      padding-top: 100%; /* 1:1 Aspect Ratio */
+      padding-top: 100%;
       background-color: var(--background);
     }
     
@@ -130,15 +131,21 @@ import { Thumbnail } from '../../../core/models/image.model';
 export class ImageCardComponent {
   @Input() thumbnail!: Thumbnail;
   @Output() delete = new EventEmitter<string>();
-  
+
+  constructor(private readonly router: Router,private readonly imageContext: ImageContextService) {}
+
   getImageType(extension: string): string {
-    // Remove the dot and return the extension
     return extension.replace('.', '');
   }
-  
+
   onDelete(): void {
     if (confirm('Are you sure you want to delete this image?')) {
       this.delete.emit(this.thumbnail.id);
     }
+  }
+
+  goToDetail(): void {
+    this.imageContext.setThumbnailId(this.thumbnail.id);
+    this.router.navigate(['/image', this.thumbnail.imageID]);
   }
 }

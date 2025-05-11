@@ -26,7 +26,7 @@ export interface ImageUpdateRequest {
   id: string;
   name: string;
   owner: string;
-  thumbnail_id?: string;
+  thumbnail_id: string;
 }
 
 export interface ImageUpdateResponse {
@@ -38,5 +38,5 @@ export interface ImageUpdateResponse {
 export interface ImageDeleteRequest {
   id: string;
   owner: string;
-  thumbnail_id?: string;
+  thumbnail_id: string;
 }

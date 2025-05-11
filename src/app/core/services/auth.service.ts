@@ -61,8 +61,8 @@ export class AuthService {
           const user: User = {
             username: response.username,
             email: response.email,
-            firstname: response.name.split(' ')[0] || '', //TODO Mirar lo que devuelve el login por que nos interesa???
-            lastname: response.name.split(' ')[1] || ''
+            firstname: response.firstname,
+            lastname : response.lastname
           };
           sessionStorage.setItem('user', JSON.stringify(user));
           this.currentUserSubject.next(user);

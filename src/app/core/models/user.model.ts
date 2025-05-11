@@ -13,7 +13,8 @@ export interface LoginRequest {
 export interface LoginResponse {
   username: string;
   email: string;
-  name: string;
+  firstname: string;
+  lastname : string;
   message: string;
 }
 

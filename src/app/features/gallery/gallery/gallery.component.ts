@@ -40,7 +40,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
           *ngFor="let thumbnail of thumbnails"
           [thumbnail]="thumbnail"
           (delete)="onDeleteImage($event)"
-        ></app-image-card>
+        />
       </div>
       
       <div *ngIf="hasMore && thumbnails.length" class="load-more-container">

@@ -125,6 +125,15 @@ import { PasswordRequirementsComponent } from "../../../shared/components/passwo
               placeholder="Create a password"
               [class.error]="submitted && f['password'].errors"
             />
+            <div
+              *ngIf="submitted && f['password'].errors"
+              class="error-message"
+            >
+              <span *ngIf="f['password'].errors['required']"
+                >Password is required</span
+              >
+            </div>
+
             <app-password-requirements
               *ngIf="f['password'].value?.length > 0"
               [password]="f['password'].value"

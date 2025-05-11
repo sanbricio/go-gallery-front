@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
@@ -164,7 +164,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
     }
   `]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loginForm: FormGroup;
   loading = false;
   submitted = false;
@@ -177,17 +177,19 @@ export class LoginComponent {
     private readonly authService: AuthService,
     private readonly toastService: ToastService
   ) {
-    // Redirect if already logged in
-    if (this.authService.isLoggedIn) {
-      this.router.navigate(['/gallery']);
-    }
-    
     // Initialize form
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    
+  }
+
+  ngOnInit(): void {
+    // Redirect if already logged in
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/gallery']);
+    }
+
     // Get return url from route parameters or default to '/gallery'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] ?? '/gallery';
   }

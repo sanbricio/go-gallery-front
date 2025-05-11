@@ -436,6 +436,7 @@ export class ImageDetailComponent implements OnInit {
       }, 1000);
     } catch (error) {
       this.toastService.show('Error downloading image', 'error');
+      console.error('Download error:', error);
       this.downloadLoading = false;
     }
   }

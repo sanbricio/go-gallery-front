@@ -48,6 +48,7 @@ export class AuthService {
         const user = JSON.parse(userJson);
         this.currentUserSubject.next(user);
       } catch (e) {
+        console.error('Error parsing user from sessionStorage:', e);
         sessionStorage.removeItem('user');
         this.currentUserSubject.next(null);
       }

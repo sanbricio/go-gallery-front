@@ -38,9 +38,9 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
               >
               
               <div *ngIf="!selectedFile" class="drop-message">
-                <span class="upload-icon">📁</span>
+                <img src="assets/images/icons/folder.svg" alt="Upload Folder" class="upload-icon" />
                 <p>Drag and drop an image here or click to browse</p>
-                <p class="file-hint">Accepted formats: JPEG, PNG, WebP</p>
+                <p class="file-hint">Accepted formats: JPG, JPEG, PNG, WebP</p>
               </div>
               
               <div *ngIf="selectedFile" class="file-preview">
@@ -99,7 +99,13 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
       flex-direction: column;
       gap: 24px;
     }
-    
+
+    .upload-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 8px;
+    }
+
     .form-group {
       display: flex;
       flex-direction: column;
@@ -287,10 +293,10 @@ export class UploadComponent {
   submitted = false;
   
   constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private imageService: ImageService,
-    private toastService: ToastService
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router,
+    private readonly imageService: ImageService,
+    private readonly toastService: ToastService
   ) {
     this.uploadForm = this.formBuilder.group({
       file: [null, Validators.required]
@@ -298,9 +304,9 @@ export class UploadComponent {
   }
   
   onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length) {
-      this.handleFile(input.files[0]);
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.handleFile(file);
     }
   }
   
@@ -321,9 +327,9 @@ export class UploadComponent {
     event.stopPropagation();
     this.isDragging = false;
     
-    if (event.dataTransfer && event.dataTransfer.files.length) {
-      const file = event.dataTransfer.files[0];
-      // Check if it's an image
+    const file = event.dataTransfer?.files?.[0];
+    // Check if it's an image
+    if (file){
       if (file.type.startsWith('image/')) {
         this.handleFile(file);
       } else {
@@ -334,8 +340,8 @@ export class UploadComponent {
   
   handleFile(file: File): void {
     // Accept only image files
-    if (!file.type.match(/image\/(jpeg|jpg|png|webp)/)) {
-      this.toastService.show('Only JPEG, PNG, and WebP images are allowed', 'error');
+    if (!RegExp(/image\/(jpeg|jpg|png|webp)/).exec(file.type)) {
+      this.toastService.show('Only JPG, JPEG, PNG, and WebP images are allowed', 'error');
       return;
     }
     

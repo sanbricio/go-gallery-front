@@ -140,11 +140,7 @@ import { PasswordRequirementsComponent } from "../../../shared/components/passwo
             />
           </div>
 
-          <button
-            type="submit"
-            class="btn-primary"
-            [disabled]="loading"
-          >
+          <button type="submit" class="btn-primary" [disabled]="loading">
             <app-loading-spinner *ngIf="loading" />
             <span *ngIf="!loading">Register</span>
           </button>
@@ -299,7 +295,7 @@ export class RegisterComponent implements OnInit {
 
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    if (!value) return { required: true }; // En registro sí es obligatoria
+    if (!value) return { required: true };
 
     const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
     return regex.test(value) ? null : { invalidPassword: true };

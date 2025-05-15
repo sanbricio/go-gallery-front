@@ -17,7 +17,7 @@ import { RouterLink } from "@angular/router";
         <section>
           <h2>1. Introduction</h2>
           <p>
-            Welcome to our image sharing platform. These Terms of Use govern
+            Welcome to our GoGallery platform. These Terms of Use govern
             your access to and use of our website, services, and applications
             (collectively, the "Service"). By accessing or using the Service,
             you are agreeing to these Terms and our Privacy Policy. If you do

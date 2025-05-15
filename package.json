@@ -1,5 +1,5 @@
 {
-  "name": "angular-starter",
+  "name": "go-gallery-front",
   "private": true,
   "scripts": {
     "ng": "ng",

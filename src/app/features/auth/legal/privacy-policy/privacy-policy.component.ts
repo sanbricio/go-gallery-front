@@ -10,7 +10,7 @@ import { RouterLink } from "@angular/router";
     <div class="legal-container">
       <div class="legal-header">
         <h1>Privacy Policy</h1>
-        <p class="last-updated">Last updated: January 1, 2025</p>
+        <p class="last-updated">Last updated: May 15, 2025</p>
       </div>
 
       <div class="legal-content">
@@ -37,12 +37,9 @@ import { RouterLink } from "@angular/router";
           </p>
           <h3>Personal Data</h3>
           <ul>
-            <li>Account information (name, email address, username)</li>
-            <li>Profile information that you provide voluntarily</li>
+            <li>Account information (name, email, username)</li>
+            <li>Profile information that you provide</li>
             <li>Usage data and analytics</li>
-            <li>
-              Information from third-party services if you choose to link them
-            </li>
           </ul>
           <h3>Image Data</h3>
           <ul>
@@ -53,13 +50,11 @@ import { RouterLink } from "@angular/router";
         </section>
 
         <section>
-          <h2>3. MongoDB Data Storage</h2>
-          <p>We use MongoDB to store the following information:</p>
+          <h2>3. Data Storage</h2>
           <ul>
             <li>User account information</li>
             <li>Uploaded images (stored as binary data)</li>
             <li>Image metadata</li>
-            <li>User interactions with images (likes, shares, comments)</li>
           </ul>
           <p>
             Our databases are protected by industry-standard security measures,
@@ -95,20 +90,6 @@ import { RouterLink } from "@angular/router";
             your account is active or as needed to provide you services. You can
             delete your data or request account deletion at any time.
           </p>
-          <p>
-            After account deletion, we may retain certain information for the
-            following purposes:
-          </p>
-          <ul>
-            <li>Comply with legal obligations</li>
-            <li>Prevent fraud</li>
-            <li>Resolve disputes</li>
-            <li>Enforce agreements</li>
-          </ul>
-          <p>
-            Backups containing your data may be retained for up to 30 days after
-            deletion for system integrity purposes.
-          </p>
         </section>
 
         <section>
@@ -117,15 +98,6 @@ import { RouterLink } from "@angular/router";
             We do not sell your personal information or your uploaded images. We
             may share information in the following situations:
           </p>
-          <ul>
-            <li>With service providers who help us operate our platform</li>
-            <li>To comply with legal obligations</li>
-            <li>To protect our rights, privacy, safety or property</li>
-            <li>
-              In connection with a business transaction such as a merger or
-              acquisition
-            </li>
-          </ul>
         </section>
 
         <section>

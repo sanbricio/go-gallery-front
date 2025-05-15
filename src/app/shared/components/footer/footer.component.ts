@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
     <footer class="footer">
       <div class="footer-content">
         <p class="copyright">© {{ currentYear }} GoGallery. All rights reserved.</p>
         <div class="footer-links">
-          <a href="#" class="footer-link">Privacy Policy</a>
-          <a href="#" class="footer-link">Terms of Service</a>
-          <a href="#" class="footer-link">Contact</a>
+          <a routerLink="/privacy-policy" class="footer-link">Privacy Policy</a>
+          <a routerLink="/terms-of-use" class="footer-link">Terms of Use</a>
+          <a href="mailto:contact@gogallery.com" class="footer-link">Contact</a>
         </div>
       </div>
     </footer>
@@ -90,6 +91,8 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class FooterComponent {
+  constructor(private readonly router: Router){}
+
   get currentYear(): number {
     return new Date().getFullYear();
   }

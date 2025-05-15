@@ -140,6 +140,34 @@ import { PasswordRequirementsComponent } from "../../../shared/components/passwo
             />
           </div>
 
+          <div class="form-group terms-group">
+            <label class="terms-wrapper" for="acceptTerms">
+              <div class="custom-checkbox">
+                <input
+                  type="checkbox"
+                  id="acceptTerms"
+                  formControlName="acceptTerms"
+                  class="terms-checkbox"
+                />
+                <span class="checkmark"></span>
+              </div>
+              <span class="terms-label">
+                I accept the
+                <a routerLink="/terms-of-use" target="_blank">Terms of Use</a>
+                and
+                <a routerLink="/privacy-policy" target="_blank"
+                  >Privacy Policy</a
+                >
+              </span>
+            </label>
+            <div
+              *ngIf="submitted && f['acceptTerms'].errors"
+              class="error-message"
+            >
+              You must accept the terms to continue
+            </div>
+          </div>
+
           <button type="submit" class="btn-primary" [disabled]="loading">
             <app-loading-spinner *ngIf="loading" />
             <span *ngIf="!loading">Register</span>
@@ -270,6 +298,95 @@ import { PasswordRequirementsComponent } from "../../../shared/components/passwo
       .register-footer a:hover {
         text-decoration: underline;
       }
+
+      .terms-group {
+        margin: 8px 0;
+      }
+
+      .terms-wrapper {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        cursor: pointer;
+        padding: 4px;
+        margin: -4px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+
+      .terms-wrapper:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      .custom-checkbox {
+        position: relative;
+        min-width: 20px;
+        height: 20px;
+        margin-top: 2px;
+      }
+
+      .terms-checkbox {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #fff;
+        border: 2px solid var(--border);
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .terms-checkbox:checked ~ .checkmark {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      .terms-checkbox:checked ~ .checkmark:after {
+        display: block;
+      }
+
+      .terms-checkbox:focus ~ .checkmark {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      .terms-label {
+        font-size: 14px;
+        line-height: 1.4;
+        user-select: none;
+      }
+
+      .terms-label a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .terms-label a:hover {
+        text-decoration: underline;
+      }
     `,
   ],
 })
@@ -290,6 +407,7 @@ export class RegisterComponent implements OnInit {
       username: ["", [Validators.required, Validators.minLength(3)]],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, this.passwordValidator]],
+      acceptTerms: [false, Validators.requiredTrue],
     });
   }
 
@@ -307,7 +425,6 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  // Getter for easy access to form fields
   get f() {
     return this.registerForm.controls;
   }
@@ -316,6 +433,7 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
+      this.toastService.show("Please complete all required fields correctly.", "error");
       return;
     }
 

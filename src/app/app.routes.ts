@@ -56,8 +56,22 @@ export const routes: Routes = [
   {
     path: "recover-password",
     loadComponent: () =>
-      import("./features/auth/recover-password/recover-password.component").then(
-        (m) => m.RecoverPasswordComponent
+      import(
+        "./features/auth/recover-password/recover-password.component"
+      ).then((m) => m.RecoverPasswordComponent),
+  },
+  {
+    path: "terms-of-use",
+    loadComponent: () =>
+      import("./features/auth/legal/terms-of-use/terms-of-use.component").then(
+        (m) => m.TermsOfUseComponent
+      ),
+  },
+  {
+    path: "privacy-policy",
+    loadComponent: () =>
+      import("./features/auth/legal/privacy-policy/privacy-policy.component").then(
+        (m) => m.PrivacyPolicyComponent
       ),
   },
   {

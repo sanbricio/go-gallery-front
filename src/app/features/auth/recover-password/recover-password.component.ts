@@ -192,10 +192,10 @@ export class RecoverPasswordComponent {
   loading = false;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private toastService: ToastService,
-    private router: Router
+    private readonly fb: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly toastService: ToastService,
+    private readonly router: Router
   ) {
     this.recoverForm = this.fb.group({
       email: ["", [Validators.required, Validators.email]],

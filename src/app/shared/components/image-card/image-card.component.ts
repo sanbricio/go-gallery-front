@@ -31,7 +31,7 @@ import { ImageContextService } from "../../../core/services/image-context.servic
           {{ thumbnail.name }}
         </a>
         <div class="image-meta">
-          <span class="image-size">{{ thumbnail.size }}</span>
+          <span class="image-size">{{ thumbnail.image_size }}</span>
           <button class="delete-btn" (click)="onDelete()" title="Delete image">
             <img
               src="assets/images/icons/x.svg"

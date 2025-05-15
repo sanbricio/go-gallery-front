@@ -14,6 +14,7 @@ export interface Thumbnail {
   content_file: string;
   owner: string;
   size: string;
+  image_size: string;
   imageID: string;
 }
 
